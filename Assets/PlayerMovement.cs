@@ -12,6 +12,11 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Jumping")]
     public float jumpPower = 10f;
+
+    [Header("Ground Check")]
+    public Transform groundCheckPos;
+    public Vector2 groundCheckSize = new Vector2(0.5f, 0.5f);
+    public LayerMask groundLayer;
     // Start is called before the first frame update
     void Start()
     {
@@ -30,9 +35,33 @@ public class PlayerMovement : MonoBehaviour
 
     public void Jump(InputAction.CallbackContext context)
     {
-        if (context.performed)
+        if (IsGrounded())
         {
-            rb.velocity = new Vector2(rb.velocity.x, jumpPower);
+            //Hold down jump button = full height
+            if (context.performed)
+            {
+                rb.velocity = new Vector2(rb.velocity.x, jumpPower);
+            }
+            else if (context.canceled)
+            {
+                //Light tap if jump button = half the height
+                rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
+            }
         }
+    }
+
+    private bool IsGrounded()
+    {
+        //Check if the player is touching the ground
+        if(Physics2D.OverlapBox(groundCheckPos.position, groundCheckSize, 0, groundLayer))
+        {
+            return true;
+        }
+        return false;
+    }
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.white;
+        Gizmos.DrawWireCube(groundCheckPos.position, groundCheckSize);
     }
 }
