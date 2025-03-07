@@ -1627,7 +1627,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   baseGravity: 2
-  maxFallSpeed: 18
+  maxFallSpeed: 10
   fallSpeedMultiplier: 2
   wallCheckPos: {fileID: 827228561}
   wallCheckSize: {x: 0.06, y: 0.92}
@@ -1635,6 +1635,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   wallSlideSpeed: 2
+  wallJumpPower: {x: 5, y: 10}
 --- !u!114 &686702432
 MonoBehaviour:
   m_ObjectHideFlags: 0
